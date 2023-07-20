@@ -2,7 +2,7 @@
 
 pushd .
 cd ~ || exit $?
-BPKG=$(which bpkg)
+BPKG=$(type -P bpkg)
 popd || exit $?
 
 declare -a tags=($(git tag -l))

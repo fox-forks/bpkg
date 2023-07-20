@@ -6,15 +6,15 @@ if ! type -f bpkg-utils &>/dev/null; then
 fi
 
 # shellcheck source=lib/utils/utils.sh
-source "$(which bpkg-utils)"
+source "$(type -P bpkg-utils)"
 
 # shellcheck source=lib/realpath/realpath.sh
 bpkg_exec_or_exit bpkg-realpath &&
-  source "$(which bpkg-realpath)"
+  source "$(type -P bpkg-realpath)"
 
 # shellcheck source=lib/getdeps/getdeps.sh
 bpkg_exec_or_exit bpkg-getdeps &&
-  source "$(which bpkg-getdeps)"
+  source "$(type -P bpkg-getdeps)"
 
 bpkg_initrc
 

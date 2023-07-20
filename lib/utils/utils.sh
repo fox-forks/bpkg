@@ -166,7 +166,7 @@ if [ -z "${BPKG_UTILS}" ]; then
 
   # shellcheck disable=SC2230
   # shellcheck source=lib/env/env.sh
-  source "$(which bpkg-env)"
+  source "$(type -P bpkg-env)"
 
 
   export -f bpkg_initrc

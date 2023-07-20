@@ -6,13 +6,13 @@ if ! type -f bpkg-utils &>/dev/null; then
 fi
 
 # shellcheck source=lib/utils/utils.sh
-source "$(which bpkg-utils)"
+source "$(type -P bpkg-utils)"
 
 # shellcheck source=lib/realpath/realpath.sh
 bpkg_exec_or_exit bpkg-realpath &&
-  source "$(which bpkg-realpath)"
+  source "$(type -P bpkg-realpath)"
 
-BPKG_JSON="$(which bpkg-json)"
+BPKG_JSON="$(type -P bpkg-json)"
 
 if [ -z "$BPKG_JSON" ]; then
   BPKG_JSON="$(bpkg_realpath "$0/../JSON/JSON.sh")"

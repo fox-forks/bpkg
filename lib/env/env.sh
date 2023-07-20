@@ -6,7 +6,7 @@ if ! type -f bpkg-package &>/dev/null; then
 else
   # shellcheck disable=SC2230
   # shellcheck source=lib/package/package.sh
-  source "$(which bpkg-package)"
+  source "$(type -P bpkg-package)"
 fi
 
 if ! type -f bpkg-realpath &>/dev/null; then
@@ -15,7 +15,7 @@ if ! type -f bpkg-realpath &>/dev/null; then
 else
   # shellcheck disable=SC2230
   # shellcheck source=lib/realpath/realpath.sh
-  source "$(which bpkg-realpath)"
+  source "$(type -P bpkg-realpath)"
 fi
 
 # List of bash source files
@@ -36,7 +36,7 @@ export BPKG_FORCE_ACTIONS
 ## os
 export BPKG_OS="$(uname)"
 export BPKG_CWD="$(pwd)"
-export BPKG_BIN="${BPKG_BIN:-$(which bpkg)}"
+export BPKG_BIN="${BPKG_BIN:-$(type -P bpkg)}"
 export BPKG_USER="${BPKG_USER:-$USER}"
 
 ## git

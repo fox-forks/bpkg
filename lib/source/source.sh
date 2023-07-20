@@ -6,11 +6,11 @@ if ! type -f bpkg-utils &>/dev/null; then
 fi
 
 # shellcheck source=lib/utils/utils.sh
-source "$(which bpkg-utils)"
+source "$(type -P bpkg-utils)"
 
 # shellcheck source=lib/run/run.sh
 bpkg_exec_or_exit bpkg-run &&
-  source "$(which bpkg-run)"
+  source "$(type -P bpkg-run)"
 
 
 bpkg_source () {

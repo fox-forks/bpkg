@@ -6,7 +6,7 @@ if ! type -f bpkg-utils &>/dev/null; then
 fi
 
 # shellcheck source=lib/utils/utils.sh
-source "$(which bpkg-utils)"
+source "$(type -P bpkg-utils)"
 
 ## output usage
 usage () {

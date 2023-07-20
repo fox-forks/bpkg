@@ -6,19 +6,19 @@ if ! type -f bpkg-utils &>/dev/null; then
 fi
 
 # shellcheck source=lib/utils/utils.sh
-source "$(which bpkg-utils)"
+source "$(type -P bpkg-utils)"
 
 # shellcheck source=lib/realpath/realpath.sh
 bpkg_exec_or_exit bpkg-realpath &&
-  source "$(which bpkg-realpath)"
+  source "$(type -P bpkg-realpath)"
 
 # shellcheck source=lib/install/install.sh
 bpkg_exec_or_exit bpkg-install &&
-  source "$(which bpkg-install)"
+  source "$(type -P bpkg-install)"
 
 # shellcheck source=lib/package/package.sh
 bpkg_exec_or_exit bpkg-package &&
-  source "$(which bpkg-package)"
+  source "$(type -P bpkg-package)"
 
 bpkg_initrc
 
@@ -139,7 +139,7 @@ bpkg_run () {
       cd "$root" || return 1
       # shellcheck disable=SC2230
       # shellcheck source=lib/env/env.sh
-      source "$(which bpkg-env)"
+      source "$(type -P bpkg-env)"
 
       local parts=()
       # shellcheck disable=SC2086
@@ -154,7 +154,7 @@ bpkg_run () {
             args+=("${found[@]}")
           else
             # shellcheck disable=SC2086
-            args+=($($(which ls) ${parts[$i]} 2>/dev/null))
+            args+=($($(type -P ls) ${parts[$i]} 2>/dev/null))
           fi
         else
           args+=("${parts[$i]}")
@@ -167,7 +167,7 @@ bpkg_run () {
     fi
   fi
 
-  if which "$name" 2>/dev/null; then
+  if type -P "$name" 2>/dev/null; then
     return 0
   fi
 
@@ -202,11 +202,11 @@ bpkg_run () {
   fi
 
   if (( 1 == should_emit_source )); then
-    if which "$name" 2>/dev/null; then
+    if type -P "$name" 2>/dev/null; then
       :
     elif test -f "$1"; then
       bpkg_realpath "$1"
-    elif [ -n "$1" ] && which "$1" 2>/dev/null; then
+    elif [ -n "$1" ] && type -P "$1" 2>/dev/null; then
       :
     fi
   else
@@ -214,11 +214,11 @@ bpkg_run () {
 
     if (( 1 == should_source )); then
       # shellcheck disable=SC1090
-      source "$(which "$name")"
+      source "$(type -P "$name")"
     else
       # shellcheck disable=SC2230
       # shellcheck source=lib/env/env.sh
-      source "$(which bpkg-env)"
+      source "$(type -P bpkg-env)"
 
       cmd="$(bpkg_package commands "$1" 2>/dev/null)"
 
@@ -236,7 +236,7 @@ bpkg_run () {
               args+=("${found[@]}")
             else
               # shellcheck disable=SC2086
-              args+=($($(which ls) ${parts[$i]} 2>/dev/null))
+              args+=($($(type -P ls) ${parts[$i]} 2>/dev/null))
             fi
           fi
         done
@@ -246,7 +246,7 @@ bpkg_run () {
       fi
 
       # shellcheck disable=SC2068
-      "$(which "$name")" $@
+      "$(type -P "$name")" $@
     fi
   fi
 

@@ -3,7 +3,7 @@
 function bpkg_realpath () {
   local target="$1"
 
-  if [ -n "$(which realpath 2>/dev/null)" ]; then
+  if [ -n "$(type -P realpath 2>/dev/null)" ]; then
     realpath "$@"
     return $?
   fi
