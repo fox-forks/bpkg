@@ -134,7 +134,7 @@ bpkg_package () {
 
     if test -f "$pkg"; then
       if [ -z "$1" ]; then
-        ## output all propertyies if property
+        ## output all properties if property
         ## is ommited
         cat < "$pkg" | "$BPKG_JSON" -b || return $?
         rc=0
@@ -145,22 +145,22 @@ bpkg_package () {
         declare -a peek
 
         # shellcheck disable=SC2068
-        IFS=$'\n' read -r -d '' -a peek <<< "$(cat < "$pkg" | "$BPKG_JSON" -b | grep -E "$(expand_grep_args --strict "$@")")"
-
-        # shellcheck disable=SC2068
         IFS=$'\n' read -r -d '' -a results <<< "$(cat < "$pkg" | "$BPKG_JSON" -b | grep -E "$(expand_grep_args $@)")"
 
         if (( ${#results[@]} == 1 )); then
+          # shellcheck disable=SC2068
+          IFS=$'\n' read -r -d '' -a peek <<< "$(cat < "$pkg" | "$BPKG_JSON" -b | grep -E "$(expand_grep_args --strict "$@")")"
+
           rc=0
           if (( ${#peek[@]} > 0 )); then
             {
               echo "${results[@]}"        |
-                awk '{ $1=""; print $0 }' | ## print value
-                sed 's/^\s*//g'           | ## remove leading whitespace
-                sed 's/\s*$//g'           | ## remove trailing whitespace
-                sed 's/^"//g'             | ## remove leading quote from JSON value
-                sed 's/"$//g'             | ## remove trailing quote from JSON value
-                sed 's/^ *//;s/ *$//'
+                awk '{ $1=""; print $0 }' | # print value
+                sed -e 's/^\s*//g' \
+                    -e 's/\s*$//g' \
+                    -e 's/^"//g' \
+                    -e 's/"$//g' \
+                    -e 's/^ *//;s/ *$//'
             } || return $?
           else
             echo -e "${results[@]}"
